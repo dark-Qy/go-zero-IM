@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="091decfd-9425-46a0-a79b-ff123f3ea94d" name="docker">
+        <fileTransfer rootFolder="/home/bupt/go/go-zero-IM" accessType="SFTP" host="192.168.35.129" port="22" sshConfigId="7f8ed051-41a9-46ea-8299-1dbd21305f92" sshConfig="bupt@192.168.35.129:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" isUseSudo="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
