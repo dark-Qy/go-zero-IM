@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"3v3/user/userclient"
+	"3v3/rpc/userclient"
 	"context"
 
 	"3v3/api/internal/svc"

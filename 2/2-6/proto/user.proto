@@ -6,7 +6,7 @@ package  user; // 默认包名
 // protoc --go-grpc_out=require_unimplemented_servers=false:. --go_out=. ./user.proto
 
 // 包名
-option go_package = "./user";
+option go_package = "./rpc";
 
 // 定义服务名
 service User{
