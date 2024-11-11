@@ -2,8 +2,9 @@ package logic
 
 import (
 	"context"
-	"errors"
+	"easy-chat-6/pkg/xerr"
 	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 
 	"easy-chat-6/apps/user/rpc/internal/svc"
 	"easy-chat-6/apps/user/rpc/user"
@@ -13,7 +14,7 @@ import (
 
 // 定义用户不存在错误
 var (
-	ErrUserNotFound = errors.New("用户不存在")
+	ErrUserNotFound = xerr.New(xerr.SERVER_COMMON_ERROR, "用户不存在")
 )
 
 type GetUserInfoLogic struct {
@@ -36,7 +37,7 @@ func (l *GetUserInfoLogic) GetUserInfo(in *user.GetUserInfoReq) (*user.GetUserIn
 	// 根据用户id在数据库中查找用户实体
 	userEntity, err := l.svcCtx.UsersModel.FindOne(l.ctx, in.Id)
 	if err != nil {
-		return nil, ErrUserNotFound
+		return nil, errors.WithStack(ErrUserNotFound)
 	}
 	var resp user.UserEntity
 	copier.Copy(&resp, userEntity)

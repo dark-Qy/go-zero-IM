@@ -7,7 +7,8 @@ import (
 	"easy-chat-6/pkg/ctxdata"
 	"easy-chat-6/pkg/encrypt"
 	"easy-chat-6/pkg/wuid"
-	"errors"
+	"easy-chat-6/pkg/xerr"
+	"github.com/pkg/errors"
 	"time"
 
 	"easy-chat-6/apps/user/rpc/internal/svc"
@@ -18,7 +19,7 @@ import (
 
 // 创建相关错误定义
 var (
-	ErrPhoneIsRegister = errors.New("手机号已经注册")
+	ErrPhoneIsRegister = xerr.New(xerr.SERVER_COMMON_ERROR, "手机号已经注册")
 )
 
 type RegisterLogic struct {
@@ -40,11 +41,11 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 	// 1. 首先根据手机号查询用户是否已经注册
 	userEntity, err := l.svcCtx.UsersModel.FindByPhone(l.ctx, in.Phone)
 	if err != nil && err != models.ErrNotFound {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewDBErr(), "find user by phone err %v , req %v", err, in.Phone)
 	}
 	// 返回不为空
 	if userEntity != nil {
-		return nil, ErrPhoneIsRegister
+		return nil, errors.WithStack(ErrPhoneIsRegister)
 	}
 	// 2. 定义用户数据
 	userEntity = &models.Users{
@@ -62,7 +63,7 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 	if len(in.Password) > 0 {
 		genPassword, err := encrypt.GenPasswordHash([]byte(in.Password))
 		if err != nil {
-			return nil, err
+			return nil, errors.Wrapf(xerr.NewInternalErr(), "gen password hash err %v", err)
 		}
 		userEntity.Password = sql.NullString{
 			String: string(genPassword),
@@ -72,7 +73,7 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 
 	_, err = l.svcCtx.UsersModel.Insert(l.ctx, userEntity)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(xerr.NewDBErr(), "insert user err %v", err)
 	}
 
 	// 4.生成token
