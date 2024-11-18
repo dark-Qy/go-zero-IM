@@ -136,8 +136,8 @@ func (m *defaultFriendsModel) Inserts(ctx context.Context, session sqlx.Session,
 	sql.WriteString(fmt.Sprintf("insert into %s (%s) values ", m.table, friendsRowsExpectAutoSet))
 
 	for i, v := range data {
-		sql.WriteString("(?, ?, ?, ?, ?)")
-		args = append(args, v.UserId, v.FriendUid, v.Remark, v.AddSource, v.CreatedAt)
+		sql.WriteString("(?, ?, ?, ?)")
+		args = append(args, v.UserId, v.FriendUid, v.Remark, v.AddSource)
 		if i == len(data)-1 {
 			break
 		}

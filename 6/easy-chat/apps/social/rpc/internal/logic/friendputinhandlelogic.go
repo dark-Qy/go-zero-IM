@@ -41,6 +41,7 @@ func (l *FriendPutInHandleLogic) FriendPutInHandle(in *social.FriendPutInHandleR
 		return nil, errors.Wrapf(xerr.NewDBErr(), "find friendsRequest by friendReqid err %v req %v ", err,
 			in.FriendReqId)
 	}
+	println("friendReq:%d", in.FriendReqId)
 	// 验证是否有处理
 	switch constants.HandlerResult(friendReq.HandleResult.Int64) {
 	case constants.PassHandlerResult:
