@@ -21,11 +21,13 @@ func main() {
 	if err := c.SetUp(); err != nil {
 		panic(err)
 	}
+	ctx := svc.NewServiceContext(c)
 
-	srv := websocket.NewServer(c.ListenOn)
+	srv := websocket.NewServer(c.ListenOn,
+		websocket.WithServerAuthentication(handler.NewJwtAuthHandler(ctx)),
+	)
 	defer srv.Stop()
 
-	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(srv, ctx)
 
 	fmt.Printf("Starting websocket server at %v ...\n", c.ListenOn)

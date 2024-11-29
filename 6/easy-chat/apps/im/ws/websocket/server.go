@@ -61,6 +61,7 @@ func (s *Server) ServerWs(w http.ResponseWriter, r *http.Request) {
 	// 连接鉴权
 	if !s.authentication.Auth(w, r) {
 		conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprint("no access permission")))
+		conn.Close()
 		return
 	}
 
