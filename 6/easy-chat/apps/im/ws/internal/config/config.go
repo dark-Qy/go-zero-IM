@@ -9,4 +9,13 @@ type Config struct {
 	JwtAuth struct {
 		AccessSecret string
 	}
+	Mongo struct {
+		Url string
+		Db  string
+	}
+
+	MsgChatTransfer struct {
+		Topic string
+		Addrs []string
+	}
 }
