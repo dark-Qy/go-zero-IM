@@ -3,7 +3,7 @@ package main
 import (
 	"easy-chat-6/apps/task/mq/internal/config"
 	"easy-chat-6/apps/task/mq/internal/handler"
-	"easy-chat-6/apps/task/mq/internal/handler/svc"
+	"easy-chat-6/apps/task/mq/internal/svc"
 	"flag"
 	"fmt"
 	"github.com/zeromicro/go-zero/core/conf"

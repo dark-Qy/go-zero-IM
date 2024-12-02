@@ -2,7 +2,7 @@ package handler
 
 import (
 	"easy-chat-6/apps/task/mq/internal/handler/msgTransfer"
-	"easy-chat-6/apps/task/mq/internal/handler/svc"
+	"easy-chat-6/apps/task/mq/internal/svc"
 	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/service"
 )
